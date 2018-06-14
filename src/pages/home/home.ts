@@ -1,3 +1,4 @@
+import { NavLifecycles } from './utils/ionic/nav/nav-lifecycles';
 import { CarrosServiceProvider } from './../../providers/carros-service/carros-service';
 import { Carro } from './../../app/modelos/carro';
 import { Component } from '@angular/core';
@@ -8,14 +9,14 @@ import { HttpErrorResponse } from "@angular/common/http";
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements NavLifecycles{
 
   public carros: Carro[];
 
-  constructor(public navCtrl: NavController, private _http: HttpClient,
-              private _loadingCtrl: LoadingController, private _alertCtrl: AlertController,
-              private _carrosService: CarrosServiceProvider) {
-
+  constructor(public navCtrl: NavController, private _loadingCtrl: LoadingController, private _alertCtrl: AlertController,
+    private _carrosService: CarrosServiceProvider) {
+  }
+  ionViewDidLoad() {
     let loading = this._loadingCtrl.create({
       content: 'Carregamento dos carros...'
     });
@@ -42,4 +43,7 @@ export class HomePage {
       );
   }
 
+  selecionaCarro(carro: Carro){
+
+  }
 }
