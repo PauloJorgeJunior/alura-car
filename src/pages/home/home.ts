@@ -1,3 +1,4 @@
+import { EscolhaPage } from './../escolha/escolha';
 import { NavLifecycles } from './utils/ionic/nav/nav-lifecycles';
 import { CarrosServiceProvider } from './../../providers/carros-service/carros-service';
 import { Carro } from './../../app/modelos/carro';
@@ -9,7 +10,7 @@ import { HttpErrorResponse } from "@angular/common/http";
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements NavLifecycles{
+export class HomePage implements NavLifecycles {
 
   public carros: Carro[];
 
@@ -43,7 +44,10 @@ export class HomePage implements NavLifecycles{
       );
   }
 
-  selecionaCarro(carro: Carro){
-
+  selecionaCarro(carro: Carro) {
+    console.log(carro);
+    this.navCtrl.push(EscolhaPage.name,{
+      carroSelecionado: carro
+    });
   }
 }

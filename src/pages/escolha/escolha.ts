@@ -1,3 +1,7 @@
+import { CarrosServiceProvider } from './../../providers/carros-service/carros-service';
+import { CadastroPage } from './../cadastro/cadastro';
+import { Acessorio } from './../../app/modelos/acessorio';
+import { Carro } from './../../app/modelos/carro';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -8,11 +12,31 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EscolhaPage {
 
+  public carro: Carro;
+  public acessorios: Acessorio[];
+  private _precoTotal: number;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.carro = this.navParams.get('carroSelecionado');
+    this._precoTotal = this.carro.preco;
+    this.acessorios = [
+      { nome: 'Freio ABS', preco: 800 },
+      { nome: 'Ar-condicionado', preco: 1000 },
+      { nome: 'MP3 Player', preco: 500 }];
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EscolhaPage');
+  atualizaTotal(ativado: true, acessorio: Acessorio) {
+    ativado ? this._precoTotal += acessorio.preco : this._precoTotal -= acessorio.preco;
   }
 
+  avancaCadastro() {
+    this.navCtrl.push(CadastroPage.name, {
+      carroSelecionado: this.carro,
+      precoTotal: this._precoTotal
+    });
+  }
+
+  get precoTotal() {
+    return this._precoTotal;
+  }
 }
